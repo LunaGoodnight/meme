@@ -5,7 +5,7 @@ export default async function Home() {
   const posts = await data.json()
   return (
       <ul>
-        {posts?.map(({id, imageUrl}) => (
+        {posts?.map(({id, imageUrl}:{ id: number, imageUrl: string}) => (
             <li key={id}>
               <Image
                   src={imageUrl}
