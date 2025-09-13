@@ -6,9 +6,9 @@ export const MemeDisplay = async () => {
 
     return (
         <div>
-            {posts?.map(({id, imageUrl,keywords}) => (
+            {posts?.map(({id, imageUrl, keywords}: { id: number; imageUrl: string; keywords: string }) => (
                 <li key={id}>
-                    <Image src={imageUrl} alt={keywords?.[0]} />
+                    <Image src={imageUrl} alt={keywords?.[0]}/>
                 </li>
 
             ))}
