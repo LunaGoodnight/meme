@@ -18,7 +18,7 @@ export interface MemeUploadResponse {
 export interface ApiError {
     error: string;
 }
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.meme.vividcats.org/api';
 
 export class MemeService {
     static async uploadMeme(imageFile: File, keywords: string = ''): Promise<MemeUploadResponse> {
