@@ -1,16 +1,18 @@
+import MemeCard from "@/app/MemeCard";
+import {Meme} from "@/app/meme";
 
 export const MemeDisplay = async () => {
     const data = await fetch('https://api.meme.vividcats.org/api/memes')
     const posts = await data.json()
 
     return (
-        <div>
-            {posts?.map(({id, imageUrl, keywords}: { id: number; imageUrl: string; keywords: string }) => (
-                <li key={id} className="p-6">
-                    <img src={imageUrl} alt={keywords?.[0]}/>
+        <ul className='list-none'>
+            {posts?.map((item: Meme, index: number) => (
+                <li className="p-6" key={index}>
+                    <MemeCard meme={item}/>
                 </li>
 
             ))}
-        </div>
+        </ul>
     )
 }
