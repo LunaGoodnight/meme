@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 export const MemeDisplay = async () => {
     const data = await fetch('https://api.meme.vividcats.org/api/memes')
@@ -7,8 +6,8 @@ export const MemeDisplay = async () => {
     return (
         <div>
             {posts?.map(({id, imageUrl, keywords}: { id: number; imageUrl: string; keywords: string }) => (
-                <li key={id}>
-                    <Image src={imageUrl} alt={keywords?.[0]}/>
+                <li key={id} className="p-6">
+                    <img src={imageUrl} alt={keywords?.[0]}/>
                 </li>
 
             ))}
