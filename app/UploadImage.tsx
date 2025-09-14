@@ -1,6 +1,6 @@
 // components/MemeUploader.tsx
 'use client';
-
+import { useRouter } from 'next/router'
 import React, { useState, useRef } from 'react';
 import {MemeService, MemeUploadResponse} from "@/app/meme";
 
@@ -16,7 +16,7 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
     const [keywords, setKeywords] = useState('');
     const [dragActive, setDragActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
+    const router = useRouter()
     const handleFileSelect = (file: File) => {
         if (!file) return;
 
@@ -80,7 +80,7 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
             const file = fileInputRef.current.files[0];
             const result = await MemeService.uploadMeme(file, keywords);
             onUploadSuccess?.(result);
-
+            router.push(`/${result.id}`);
             // Reset form
             setPreviewUrl(null);
             setKeywords('');
@@ -91,6 +91,7 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
             onUploadError?.(error instanceof Error ? error.message : 'Upload failed');
         } finally {
             setIsUploading(false);
+
         }
     };
 
