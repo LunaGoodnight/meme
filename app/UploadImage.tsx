@@ -1,6 +1,7 @@
 // components/MemeUploader.tsx
 'use client';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
+
 import React, { useState, useRef } from 'react';
 import {MemeService, MemeUploadResponse} from "@/app/meme";
 
