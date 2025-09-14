@@ -81,13 +81,15 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
             const file = fileInputRef.current.files[0];
             const result = await MemeService.uploadMeme(file, keywords);
             onUploadSuccess?.(result);
-            router.push(`/${result.id}`);
+
             // Reset form
             setPreviewUrl(null);
             setKeywords('');
             if (fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
+            router.push(`/${result.id}`);
+
         } catch (error) {
             onUploadError?.(error instanceof Error ? error.message : 'Upload failed');
         } finally {
