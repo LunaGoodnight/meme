@@ -2,7 +2,7 @@
 'use client';
 import { useRouter } from 'next/navigation'
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {MemeService, MemeUploadResponse} from "@/app/meme";
 
 
@@ -18,6 +18,36 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
     const [dragActive, setDragActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter()
+
+    // Handle clipboard paste
+    useEffect(() => {
+        const handlePaste = async (e: ClipboardEvent) => {
+            const items = e.clipboardData?.items;
+            if (!items) return;
+
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                if (item.type.indexOf('image') !== -1) {
+                    e.preventDefault();
+                    const file = item.getAsFile();
+                    if (file) {
+                        handleFileSelect(file);
+                        // Also set the file to the input for upload
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        if (fileInputRef.current) {
+                            fileInputRef.current.files = dataTransfer.files;
+                        }
+                    }
+                    break;
+                }
+            }
+        };
+
+        document.addEventListener('paste', handlePaste);
+        return () => document.removeEventListener('paste', handlePaste);
+    }, []);
+
     const handleFileSelect = (file: File) => {
         if (!file) return;
 
@@ -137,8 +167,13 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
                     <div className="text-sm text-gray-600">
                         <span className="font-semibold">Click to upload</span> or drag and drop
                     </div>
-                    <div className="text-xs text-gray-500">
-                        PNG, JPG, GIF, WebP up to 10MB
+                    <div className="text-xs text-gray-500 space-y-1">
+                        <div>PNG, JPG, GIF, WebP up to 10MB</div>
+                        <div className="flex items-center justify-center space-x-1">
+                            <span>Or press</span>
+                            <kbd className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-xs font-mono">Ctrl+V</kbd>
+                            <span>to paste from clipboard</span>
+                        </div>
                     </div>
                 </div>
             </div>
