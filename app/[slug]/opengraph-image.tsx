@@ -27,7 +27,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
                     justifyContent: 'center',
                 }}
             >
-                {posts?.keywords?.[0] ?? '梗圖站站'}
+                {posts?.keywords?.[0] ?? '梗圖喵喵'}
             </div>
         ),
         {
