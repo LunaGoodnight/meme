@@ -1,7 +1,7 @@
 // components/MemeCard.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Meme, MemeService} from "@/app/meme";
 
 interface MemeCardProps {
@@ -9,10 +9,10 @@ interface MemeCardProps {
     onDelete?: (id: number) => void;
 }
 
-export default function MemeCard({ meme, onDelete }: MemeCardProps) {
+export default function MemeCard({meme, onDelete}: MemeCardProps) {
     const [isDeleting, setIsDeleting] = useState(false);
     const [imageError, setImageError] = useState(false);
-
+    const [isAdmin, setIsAdmin] = useState(false);
     const handleDelete = async () => {
         if (!confirm('Are you sure you want to delete this meme?')) return;
 
@@ -59,10 +59,11 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
                     >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
-                            <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
+                            <path
+                                d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
                         </svg>
                     </button>
-                    <button
+                    {isAdmin && <button
                         onClick={handleDelete}
                         disabled={isDeleting}
                         className="bg-red-500 text-white p-1 rounded hover:bg-red-600 disabled:opacity-50"
@@ -72,10 +73,13 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                         ) : (
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path>
+                                <path fillRule="evenodd"
+                                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                      clipRule="evenodd"></path>
                             </svg>
                         )}
-                    </button>
+                    </button>}
+
                 </div>
             </div>
 
