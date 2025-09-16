@@ -39,18 +39,18 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
       {/* Image */}
       <div className="relative">
         {!imageError ? (
           <img
             src={meme.imageUrl}
             alt="Meme"
-            className="w-full"
+            className="w-full h-auto object-cover"
             onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+          <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
             <span className="text-gray-500">Image failed to load</span>
           </div>
         )}

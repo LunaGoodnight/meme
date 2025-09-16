@@ -6,13 +6,12 @@ export const MemeDisplay = async () => {
     const posts = await data.json()
 
     return (
-        <ul className='list-none flex flex-wrap'>
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
             {posts?.map((item: Meme, index: number) => (
-                <li className="p-6 lg:max-w-1/3" key={index}>
+                <div className="break-inside-avoid mb-4" key={index}>
                     <MemeCard meme={item}/>
-                </li>
-
+                </div>
             ))}
-        </ul>
+        </div>
     )
 }
