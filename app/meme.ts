@@ -34,6 +34,9 @@ export class MemeService {
         });
 
         if (!response.ok) {
+            if (response.status === 413) {
+                throw new Error('Image is too large! Please choose a smaller image.');
+            }
             const errorData = await response.json().catch(() => ({ error: 'Upload failed' }));
             console.log({ errorData });
             throw new Error(errorData.error || `HTTP error! status: ${response.status}`);

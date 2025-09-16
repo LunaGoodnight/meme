@@ -54,13 +54,17 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
         // Validate file type
         const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         if (!allowedTypes.includes(file.type)) {
-            onUploadError?.('Only JPEG, PNG, GIF, and WebP images are allowed');
+            const errorMsg = 'Only JPEG, PNG, GIF, and WebP images are allowed';
+            alert(errorMsg);
+            onUploadError?.(errorMsg);
             return;
         }
 
         // Validate file size (10MB)
         if (file.size > 10 * 1024 * 1024) {
-            onUploadError?.('Image size cannot exceed 10MB');
+            const errorMsg = 'Image size cannot exceed 10MB';
+            alert(errorMsg);
+            onUploadError?.(errorMsg);
             return;
         }
 
@@ -102,7 +106,9 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
 
     const handleUpload = async () => {
         if (!fileInputRef.current?.files?.[0]) {
-            onUploadError?.('Please select an image file');
+            const errorMsg = 'Please select an image file';
+            alert(errorMsg);
+            onUploadError?.(errorMsg);
             return;
         }
 
@@ -121,7 +127,9 @@ export const MemeUploader =({ onUploadSuccess, onUploadError }: MemeUploaderProp
             router.push(`/${result.id}`);
 
         } catch (error) {
-            onUploadError?.(error instanceof Error ? error.message : 'Upload failed');
+            const errorMsg = error instanceof Error ? error.message : 'Upload failed';
+            alert(errorMsg);
+            onUploadError?.(errorMsg);
         } finally {
             setIsUploading(false);
 

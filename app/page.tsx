@@ -8,7 +8,7 @@ export default async function Home() {
             <div className='lg:p-20 p-6'>
                 <MemeUploader/>
             </div>
-            <div className='lg:p-20 md:p-6'>
+            <div className='lg:p-20 p-6'>
                 <MemeDisplay/>
             </div>
         </div>
