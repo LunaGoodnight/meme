@@ -35,6 +35,7 @@ export class MemeService {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({ error: 'Upload failed' }));
+            console.log({ errorData });
             throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
         }
 
