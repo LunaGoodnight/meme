@@ -15,7 +15,7 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
-  const handleOpenTab = ({ id }:{id:number}) => {
+  const handleOpenTab = ({ id }: { id: number }) => {
     router.push(`/${id}`);
   };
   const handleDelete = async () => {
@@ -39,7 +39,10 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+    <div
+      onClick={() => handleOpenTab({ id: meme.id })}
+      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+    >
       {/* Image */}
       <div className="relative">
         {!imageError ? (
@@ -67,15 +70,15 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
           {/*    <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>*/}
           {/*  </svg>*/}
           {/*</button>*/}
-          <button
-            onClick={()=>handleOpenTab({ id: meme.id })}
-            className="bg-indigo-500 hover:bg-fuchsia-500 text-white p-1 rounded disabled:opacity-50"
-          >
-            <svg width="24" height="24" fill="none" stroke="currentColor"  viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" fill="none"/>
-              <path d="M9 15L21 3M15 3h6v6" stroke="currentColor" fill="none"/>
-            </svg>
-          </button>
+          {/*<button*/}
+          {/*  onClick={()=>handleOpenTab({ id: meme.id })}*/}
+          {/*  className="bg-indigo-500 hover:bg-fuchsia-500 text-white p-1 rounded disabled:opacity-50"*/}
+          {/*>*/}
+          {/*  <svg width="24" height="24" fill="none" stroke="currentColor"  viewBox="0 0 24 24">*/}
+          {/*    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" fill="none"/>*/}
+          {/*    <path d="M9 15L21 3M15 3h6v6" stroke="currentColor" fill="none"/>*/}
+          {/*  </svg>*/}
+          {/*</button>*/}
           {isAdmin && (
             <button
               onClick={handleDelete}

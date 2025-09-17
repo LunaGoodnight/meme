@@ -5,10 +5,10 @@ import {MemeDisplay} from "@/app/MemeDisplay";
 export default async function Home() {
     return (
         <div>
-            <div className='lg:p-20 p-6'>
+            <div className=''>
                 <MemeUploader/>
             </div>
-            <div className='lg:p-20 p-6'>
+            <div className='lg:p-20 '>
                 <MemeDisplay/>
             </div>
         </div>

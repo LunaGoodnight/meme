@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { ImageView } from "@/app/[slug]/ImageView";
 
 export async function generateMetadata({
   params,
@@ -39,17 +40,20 @@ export default async function Page({
 
   const data = await fetch(`https://api.meme.vividcats.org/api/memes/${slug}`);
   const posts = await data.json();
-
-  if (posts) {
+  console.log(slug)
+  if (slug.includes(".") && posts) {
     return (
       <div className="flex justify-center items-center min-h-screen p-4">
         <img
-          className="w-full h-auto object-contain md:max-w-none md:max-h-none md:w-auto"
+          className="h-auto object-contain md:max-w-none md:max-h-none sm:w-full"
           src={posts?.imageUrl}
           alt=""
         />
       </div>
     );
+  }
+  if (posts) {
+    return <ImageView posts={posts} />;
   }
   return <div>No such image</div>;
 }
