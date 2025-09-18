@@ -11,10 +11,7 @@ export const ImageView = ({posts}: { posts: Meme }) => {
     };
     return (
         <div className="flex flex-col p-4 gap-6">
-            <div onClick={onBackHome}>
-                <button className="bg-indigo-500 text-amber-50 p-4 ">回首頁</button>
-            </div>
-
+            <button onClick={onBackHome} className="bg-indigo-500 text-amber-50 p-4 ">回首頁</button>
             <div className="flex justify-center items-top">
                 <img className="w-full lg:w-2/5 md:3/4" src={posts?.imageUrl} alt=""/>
             </div>
