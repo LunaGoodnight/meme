@@ -16,7 +16,7 @@ export const ImageView = ({ posts }: { posts: Meme }) => {
       </div>
 
       <div className="flex justify-center items-top">
-        <img className="w-full md:w-2/5 " src={posts?.imageUrl} alt="" />
+        <img className="w-full lg:w-2/5 md:3/4" src={posts?.imageUrl} alt="" />
       </div>
     </div>
   );
