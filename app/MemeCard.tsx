@@ -47,6 +47,7 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
       <div className="relative">
         {!imageError ? (
           <img
+            loading="lazy"
             src={meme.imageUrl}
             alt="Meme"
             className="w-full h-auto object-cover"
