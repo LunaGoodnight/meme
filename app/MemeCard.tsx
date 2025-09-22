@@ -14,8 +14,7 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [imageHeight, setImageHeight] = useState(0);
-  const [imageSize, setImageSize] = useState(null);
+
   const [calculatedHeight, setCalculatedHeight] = useState(192); // default 48 * 4 = 192px
   const router = useRouter();
   const handleOpenTab = ({ id }: { id: number }) => {
@@ -52,9 +51,7 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
     }
 
 
-    getImageDimensions(meme.imageUrl).then(res => {
-      console.log({ res})
-      setImageSize(res);
+    getImageDimensions(meme.imageUrl).then((res:{width: number; height: number;}) => {
 
       // Calculate height based on card width (assuming card width is around 300px)
       const cardWidth = 300;
