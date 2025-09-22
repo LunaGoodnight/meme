@@ -16,6 +16,7 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [imageHeight, setImageHeight] = useState(0);
   const [imageSize, setImageSize] = useState(null);
+  const [calculatedHeight, setCalculatedHeight] = useState(192); // default 48 * 4 = 192px
   const router = useRouter();
   const handleOpenTab = ({ id }: { id: number }) => {
     router.push(`/${id}`);
@@ -52,9 +53,14 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
 
 
     getImageDimensions(meme.imageUrl).then(res => {
-      setImageHeight(res.height);
       console.log({ res})
       setImageSize(res);
+
+      // Calculate height based on card width (assuming card width is around 300px)
+      const cardWidth = 300;
+      const aspectRatio = res.height / res.width;
+      const newHeight = Math.max(192, Math.min(400, cardWidth * aspectRatio)); // min 192px, max 400px
+      setCalculatedHeight(newHeight);
     });
 
 
@@ -66,17 +72,21 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
       className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
     >
       {/* Image */}
-      <div className="relative">
+      <div className="relative" style={{ minHeight: `${calculatedHeight}px` }}>
         {!imageError ? (
           <img
             loading="lazy"
             src={meme.imageUrl}
             alt="Meme"
             className="w-full h-auto object-cover"
+            style={{ minHeight: `${calculatedHeight}px` }}
             onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+          <div
+            className="w-full bg-gray-200 flex items-center justify-center"
+            style={{ height: `${calculatedHeight}px` }}
+          >
             <span className="text-gray-500">Image failed to load</span>
           </div>
         )}
