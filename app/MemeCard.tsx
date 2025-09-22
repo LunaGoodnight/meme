@@ -1,7 +1,7 @@
 // components/MemeCard.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Meme, MemeService } from "@/app/meme";
 import { useRouter } from "next/navigation";
 
@@ -14,6 +14,8 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [imageHeight, setImageHeight] = useState(0);
+  const [imageSize, setImageSize] = useState(null);
   const router = useRouter();
   const handleOpenTab = ({ id }: { id: number }) => {
     router.push(`/${id}`);
@@ -37,6 +39,26 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
     navigator.clipboard.writeText(meme.imageUrl);
     alert("Image URL copied to clipboard!");
   };
+
+  useEffect(() => {
+    function getImageDimensions(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve({ width: img.width, height: img.height });
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+
+    getImageDimensions(meme.imageUrl).then(res => {
+      setImageHeight(res.height);
+      console.log({ res})
+      setImageSize(res);
+    });
+
+
+  }, [meme.imageUrl]);
 
   return (
     <div
