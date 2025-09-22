@@ -42,7 +42,7 @@ export default function MemeCard({ meme, onDelete }: MemeCardProps) {
   };
 
   useEffect(() => {
-    function getImageDimensions(url) {
+    function getImageDimensions(url: string): Promise<{ width: number; height: number }> {
       return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve({ width: img.width, height: img.height });
