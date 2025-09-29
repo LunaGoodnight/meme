@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import React, { useEffect, useRef, useState } from "react";
 import { MemeService, MemeUploadResponse } from "@/app/meme";
+import imageCompression from "browser-image-compression";
 
 interface MemeUploaderProps {
   onUploadSuccess?: (meme: MemeUploadResponse) => void;
@@ -117,7 +118,25 @@ export const MemeUploader = ({
     setIsUploading(true);
     try {
       const file = fileInputRef.current.files[0];
-      const result = await MemeService.uploadMeme(file, keywords);
+      console.log("originalFile instanceof Blob", file instanceof Blob); // true
+      console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
+
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+
+      const compressedFile = await imageCompression(file, options);
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob,
+      ); // true
+      console.log(
+        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`,
+      ); // smaller than maxSizeMB
+
+      const result = await MemeService.uploadMeme(compressedFile, keywords);
       onUploadSuccess?.(result);
 
       // Reset form
