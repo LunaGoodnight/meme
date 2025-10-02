@@ -9,6 +9,11 @@ export const ImageView = ({posts}: { posts: Meme }) => {
     const onBackHome = () => {
         router.push("/");
     };
+
+    const onCopyImageUrl = () => {
+        navigator.clipboard.writeText(posts.imageUrl);
+        alert("已複製圖片網址！");
+    };
     return (
         <div className="flex flex-col p-4 gap-6">
             <div>
@@ -16,6 +21,11 @@ export const ImageView = ({posts}: { posts: Meme }) => {
             </div>
             <div className="flex justify-center items-top">
                 <img className="w-full lg:w-2/5 md:3/4" src={posts?.imageUrl} alt=""/>
+            </div>
+            <div className="flex justify-center">
+                <button onClick={onCopyImageUrl} className="bg-green-500 text-white p-4 rounded">
+                    複製圖片網址
+                </button>
             </div>
         </div>
     );
