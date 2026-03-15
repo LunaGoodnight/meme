@@ -18,6 +18,15 @@ export interface MemeUploadResponse {
 export interface ApiError {
     error: string;
 }
+
+export interface PaginatedResponse {
+    data: Meme[];
+    page: number;
+    pageSize: number;
+    totalCount: number;
+    totalPages: number;
+    hasMore: boolean;
+}
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.meme.vividcats.org/api';
 
 export class MemeService {
@@ -47,6 +56,15 @@ export class MemeService {
 
     static async getAllMemes(): Promise<Meme[]> {
         const response = await fetch(`${API_BASE_URL}/memes`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        return result.data || result;
+    }
+
+    static async getMemesPaginated(page: number = 1, pageSize: number = 20): Promise<PaginatedResponse> {
+        const response = await fetch(`${API_BASE_URL}/memes?page=${page}&pageSize=${pageSize}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
